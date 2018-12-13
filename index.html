@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link href="css/header.css" rel="stylesheet"/>
+    <link href="font_ico/iconfont.css" rel="stylesheet"/>
+
+    <script type="text/javascript" charset="utf-8">
+      	mui.init();
+      	
+      	/*移动设备就绪，对原生api操作*/
+      	mui.plusReady(function(){
+      		
+      		/*设置ios设备顶部栏样式*/
+      		plus.navigator.setStatusBarStyle("light");
+      		plus.navigator.setStatusBarBackground("#C9394A")
+      	});
+    </script>
+</head>
+
+<body>
+	<header class="mui-bar mui-bar-nav title">
+	    <h1 class="mui-title title-color"><b>慕信</b></h1>
+	</header>
+	
+	<!--底部tab页-->
+	<nav class="mui-bar mui-bar-tab">
+	    <a class="mui-tab-item mui-active">
+	        <span class="mui-icon iconfont icon-fire"></span>
+	        <span class="mui-tab-label">慕信</span>
+	    </a>
+	    <a class="mui-tab-item">
+	        <span class="mui-icon iconfont icon-tongxunlu"></span>
+	        <span class="mui-tab-label">通讯录</span>
+	    </a>
+	    <a class="mui-tab-item">
+	        <span class="mui-icon mui-icon-paperplane"></span>
+	        <span class="mui-tab-label">发现</span>
+	    </a>
+	    <a class="mui-tab-item">
+	        <span class="mui-icon iconfont icon-wodedangxuan"></span>
+	        <span class="mui-tab-label">我</span>
+	    </a>
+	</nav>
+</body>
+</html>
