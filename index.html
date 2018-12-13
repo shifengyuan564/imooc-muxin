@@ -30,22 +30,82 @@
 	
 	<!--底部tab页-->
 	<nav class="mui-bar mui-bar-tab">
-	    <a class="mui-tab-item mui-active">
+	    <a class="mui-tab-item mui-active" tabindex="0">
 	        <span class="mui-icon iconfont icon-fire"></span>
 	        <span class="mui-tab-label">慕信</span>
 	    </a>
-	    <a class="mui-tab-item">
+	    <a class="mui-tab-item" tabindex="1">
 	        <span class="mui-icon iconfont icon-tongxunlu"></span>
 	        <span class="mui-tab-label">通讯录</span>
 	    </a>
-	    <a class="mui-tab-item">
+	    <a class="mui-tab-item" tabindex="2">
 	        <span class="mui-icon mui-icon-paperplane"></span>
 	        <span class="mui-tab-label">发现</span>
 	    </a>
-	    <a class="mui-tab-item">
+	    <a class="mui-tab-item" tabindex="3">
 	        <span class="mui-icon iconfont icon-wodedangxuan"></span>
 	        <span class="mui-tab-label">我</span>
 	    </a>
 	</nav>
+	
+	<script type="text/javascript">
+		var muxinArray = [
+			{
+				pageId:"imooc-chatlist.html",
+				pageUrl:"imooc-chatlist.html"
+			},
+			{
+				pageId:"imooc-contact.html",
+				pageUrl:"imooc-contact.html"
+			},
+			{
+				pageId:"imooc-discover.html",
+				pageUrl:"imooc-discover.html"
+			},
+			{
+				pageId:"imooc-me.html",
+				pageUrl:"imooc-me.html"
+			}
+		];
+		
+		var muxinStyle = {
+			top : "44px",
+			bottom:"50px"
+		}
+		
+		mui.plusReady(function(){
+			
+			// 获取当前窗口的WebviewObject对象
+			var indexWebview = plus.webview.currentWebview();
+			
+			// 向当前的主页追加四张子页webview
+			for(var i=0; i< muxinArray.length; i++){
+				var muxinPage = plus.webview.create(muxinArray[i].pageUrl, 
+													muxinArray[i].pageId, 
+													muxinStyle);
+				muxinPage.hide();	// 隐藏webview窗口
+				indexWebview.append(muxinPage); // 追加每一个子页面到主页面
+			}
+			
+			plus.webview.show(muxinArray[0].pageId);	// 默认展示第0页
+			
+			/*批量绑定tap事件,展示不同的页面*/
+			mui(".mui-bar-tab").on("tap","a", function(){
+				var tabIndex = this.getAttribute("tabindex");
+				
+				// 显示点击的tab页
+				plus.webview.show(muxinArray[tabIndex].pageId, "fade-in", 200);
+				
+				// 隐藏其他页面
+				for(var i = 0; i<muxinPage.length; i++){
+					if(i != tabIndex){
+						plus.webview.hide(muxinArray[i].pageId, "fade-out", 200);
+					}
+				}
+				
+			})
+			
+      	});
+	</script>
 </body>
 </html>
