@@ -82,7 +82,7 @@
 					var user = app.getUserGlobalInfo();
 					var faceImage = user.faceImageBig;
 					
-					var dtast = plus.downloader.createDownload(
+					var dtask = plus.downloader.createDownload(
 						app.imgServerUrl + faceImage,
 						{},
 						function(downloadFile, status) {
@@ -92,7 +92,7 @@
 							if (status == 200) {
 								var tempFile = downloadFile.filename;
 								
-								// 通过相册api保存照片到本地相册
+								// 通过相册api保存照片到本地相册。tempFile是路径
 								plus.gallery.save(tempFile, function() {
 									app.showToast("保存照片成功！", "success");
 								})
@@ -103,7 +103,7 @@
 							}
 						}
 					);
-					dtast.start();	// 启动下载任务
+					dtask.start();	// 启动下载任务
 				});
 			});
 			
