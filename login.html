@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
@@ -15,26 +14,13 @@
 		</script>
 
 		<style>
-			.p-t-85 {
-				padding-top: 10px;
-			}
+			.p-t-85 {padding-top: 10px;}
+			.p-b-70 {padding-bottom: 35px;}
+			.m-t-85 {margin-top: 15px;}
+			.container-login100 {padding: 25px;}
 			
-			.p-b-70 {
-				padding-bottom: 35px;
-			}
-			
-			.m-t-85 {
-				margin-top: 15px;
-			}
-			
-			.container-login100 {
-				padding: 25px;
-			}
 			/*toast信息提示*/
-			
-			.mui-toast-container {
-				bottom: 50% !important;
-			}
+			.mui-toast-container {bottom: 50% !important;}
 			.mui-toast-message {
 				opacity: 0.6;
 				color: #fff;
@@ -45,7 +31,6 @@
 	</head>
 
 	<body>
-
 		<div class="mui-content">
 			<div class="container-login100">
 				<div class="wrap-login100 p-t-85 p-b-20">
@@ -68,11 +53,10 @@
 						</div>
 						<div class="container-login100-form-btn">
 							<button type="submit" id="registOrLogin" class="login100-form-btn">
-								登录/注册1
+								登录/注册
 							</button>
 						</div>
 					</form>
-					
 				</div>
 			</div>
 		</div>
@@ -84,8 +68,7 @@
 				// 判断用户是否注册登录过，如果本地内存有全局的用户对象，此时直接跳转到首页
 				var userInfo = app.getUserGlobalInfo();
 				if (userInfo != null) {
-					// 页面跳转
-					mui.openWindow("index.html", "index.html");
+					mui.openWindow("index.html", "index.html");// 页面跳转
 				}
 				
 				var userform = document.getElementById("userform");
@@ -93,13 +76,12 @@
 				var txt_password = document.getElementById("txt_password");
 				
 				userform.addEventListener("submit", function(e){
+					
 					// 判断用户名是否为空，如果为空则让其获得焦点
 					if (!app.isNotNull(username.value)) {
-						// 获取焦点
-						username.focus();
+						username.focus();// 获取焦点
 					} else if (!app.isNotNull(txt_password.value)) {
-						// 获取焦点
-						txt_password.focus();
+						txt_password.focus();// 获取焦点
 					} else {
 						// 判断用户名和密码的长度，进行限制
 						if (username.value.length > 12) {
@@ -110,49 +92,41 @@
 							return false;
 						}
 						
-						// 获取每台手机的唯一cid
-						var cid = plus.push.getClientInfo().clientid;
-						// 与后端联调
+						var cid = plus.push.getClientInfo().clientid;	// 获取每台手机的唯一cid
 						mui.ajax(app.serverUrl + "/u/registOrLogin",{
 							data:{
 								username:username.value,
 								password:txt_password.value,
 								cid: cid
 							},
-							dataType:'json',//服务器返回json格式数据
-							type:'post',//HTTP请求类型
-							timeout:10000,//超时时间设置为10秒；
+							dataType:'json',	//服务器返回json格式数据
+							type:'post',
+							timeout:10000,		//超时时间设置为10秒；
 							headers:{'Content-Type':'application/json'},	              
-							success:function(data){
+							success:function(result){
 								//服务器返回响应，根据响应结果，分析是否登录成功；
-//								console.log(JSON.stringify(data));
-								
+								console.log(JSON.stringify(result));
 								username.blur();
 								txt_password.blur();
 								
-								if (data.status == 200) {
-									// 登录或者注册成功之后，保存全局用户对象到本地缓存
-									var userInfoJson = data.data;
+								if (result.status == 200) {
+									var userInfoJson = result.data;// 登录或者注册成功之后，保存全局用户对象到本地缓存
 									app.setUserGlobalInfo(userInfoJson);
-									
-									// 页面跳转
-									mui.openWindow("index.html", "index.html");
+									mui.openWindow("index.html", "index.html");// 页面跳转 (url, id)
 								} else {
-									app.showToast(data.msg, "error");
+									app.showToast(result.msg, "error");
 								}
+							},
+							error:function(xhr,type,errorThrown){
+								console.log(JSON.stringify(xhr));
+								console.log(JSON.stringify(type));//异常处理
 							}
 						});
-						
 					}
 					
-					
-					// 阻止默认时间，阻止默认表单提交
-					e.preventDefault();
+					e.preventDefault();// 阻止默认事件 (表单提交)
 				});
 			})
-			
 		</script>
-
 	</body>
-
 </html>
