@@ -116,16 +116,17 @@
 		
 		// 监听网络状态更改
 		function netChangeSwitch(){
+			
+			var muxin_title = document.getElementById("muxin_title");
+			
 			document.addEventListener("netchange", function(){
 				// 网络状态获取和判断
 				var connectionStatus = plus.networkinfo.getCurrentType();
 				if (connectionStatus != 0 && connectionStatus != 1) {
 					// 重新打开网络连接
-					var muxin_title = document.getElementById("muxin_title");
 					muxin_title.innerHTML = "<b>慕信</b>";
 				} else {
 					// 关闭网络连接
-					var muxin_title = document.getElementById("muxin_title");
 					muxin_title.innerHTML = "<b>慕信(未连接)</b>";
 				}
 			});

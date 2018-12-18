@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
@@ -30,7 +29,6 @@
 
 		<div id="msg-outter" class="mui-content">
 			<div id='msg'>
-				
 				<!--<div class="friend_lists">
 					<div class="header_img">
 						<img src="image/face-default-cat.png" width="40px" height="40px" />
@@ -48,7 +46,6 @@
 						<p class="msg-right-green">好的，没问题！时间地点？</p>
 					</div>
 				</div>-->
-
 			</div>
 		</div>
 		
@@ -71,6 +68,7 @@
 				var friendUserId;
 				var friendNickname;
 				var friendFaceImage;
+				
 				mui.plusReady(function(){
 					
 					// 获取我自己的用户信息					
@@ -91,19 +89,16 @@
 					// 标题改为朋友的昵称
 					document.getElementById("chatting-nickname").innerHTML = friendNickname;
 					
-					
 					// 渲染初始化的聊天记录HTML
 					initChatHistory();
 					
-					var areaMsgList = document.getElementById("msg");
 					// 设置聊天记录进入页面的时候自动滚动到最后一条
-					areaMsgList.scrollTop = areaMsgList.scrollHeight + areaMsgList.offsetHeight;
-					
-					// 获取dom控件
+					resizeScreen();
+					 
+					// 监听用户输入长度>0，send按钮变色
 					var msg_text = document.getElementById("msg-text");
 					var send = document.getElementById("send");
 					
-					// 监听用户输入，使得send按钮变色
 					msg_text.addEventListener("input", function(){
 						var msg_text_val = msg_text.value;
 						if (msg_text_val.length > 0) {
@@ -119,7 +114,7 @@
 						document.getElementById("msg-outter").style.paddingBottom = "50px";
 					});
 					
-					// 发送消息按钮的事件绑定
+					// send按钮的事件绑定
 					send.addEventListener("tap", function(){
 						
 						// 发送之前判断网络的状态
@@ -136,7 +131,7 @@
 						if (msg_text_val.length === 0) {
 							return;
 						}
-						
+						 
 						// 发送消息, 渲染消息的html到msg div之下
 						sendMsg(app.imgServerUrl + me.faceImage, msg_text_val);
 						// 情况消息文本框中的内容
@@ -163,7 +158,6 @@
 				
 				// 接受消息
 				function receiveMsg(msg) {
-					
 					var msgHtml = '<div class="friend_lists">' +
 										'<div class="header_img">' +
 											'<img src="' + app.imgServerUrl + friendFaceImage + '" width="40px" height="40px" />' +
@@ -181,7 +175,6 @@
 				
 				// 发送消息
 				function sendMsg(faceImg, msg) {
-					
 					var msgHtml = '<div class="me_lists">' +
 									'<div class="header_img">' +
 										'<img src="' + faceImg + '" width="40px" height="40px" />' +
@@ -191,7 +184,7 @@
 									'</div>' +
 								  '</div>';
 					var msg_list = document.getElementById("msg");
-					msg_list.insertAdjacentHTML("beforeend", msgHtml);
+					msg_list.insertAdjacentHTML("beforeend", msgHtml);	// 插到当前页面的最后
 					
 					playSendMsgSound();
 				}
@@ -216,6 +209,8 @@
 				};
 				
 //			}(mui, document));
+			
+			
 			
 			// 初始化用户的聊天记录
 			function initChatHistory() {
