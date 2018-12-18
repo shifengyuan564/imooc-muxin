@@ -44,21 +44,20 @@
 						type:'post',//HTTP请求类型
 						timeout:10000,//超时时间设置为10秒；
 						headers:{'Content-Type':'application/json'},	              
-						success:function(data){
-							//服务器返回响应
+						success:function(result){
 							plus.nativeUI.closeWaiting();
 							
-							if (data.status == 200) {
+							if (result.status == 200) {
 								mui.openWindow({
 									url: "searchFriendsResult.html",
 									id: "searchFriendsResult.html",
 									styles: {},
-									extras: {
-										willBeFriend: data.data
+									extras: {	// 用于页面之间传值
+										willBeFriend: result.data
 									}
 								});
 							} else {
-								app.showToast(data.msg, "error");
+								app.showToast(result.msg, "error");
 							}
 						}
 					});

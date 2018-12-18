@@ -1,6 +1,5 @@
 <!doctype html>
 <html>
-
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
@@ -10,7 +9,6 @@
 		<link rel="stylesheet" type="text/css" href="css/header.css" />
 
 		<style>
-			
 			#scanComponent {
 				width: 100%;
 				top: 44px;
@@ -19,27 +17,24 @@
 				text-align: center;
 				background: #000000;
 			}
-			
 		</style>
 	</head>
 
 	<body >
-
 		<header class="mui-bar mui-bar-nav title" style="position: fixed;">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left title-color"></a>
 			<h1 class="mui-title title-color"><b id="chatting-nickname">扫一扫</b></h1>
 		</header>
 		
-		<div id="scanComponent"></div>
+		<div id="scanComponent">
+		</div>
 		
 		<script type="application/javascript" src="js/app.js"></script>
 		<script type="text/javascript">
 			mui.init();
 			
 			mui.plusReady(function(){
-				
-				setTimeout("startScan()", "500");
-				
+				setTimeout("startScan()", "500");	// 500毫秒的延迟
 			});
 			
 			var scan;
@@ -57,40 +52,37 @@
 			}
 			
 			function onmarked( type, result ) {
-				if (type === 0) {
+				if (type === 0) {	// QR类型
 					var content = result.split("muxin_qrcode:");
 					if (content.length != 2) {
-						mui.alert(result)
+						mui.alert(result);
 					} else {
-						var friendUsername = content[1];
+						var friendUsername = content[1];	// 获取好友用户名 （这里没做加解密）
 						
 						var user = app.getUserGlobalInfo();
 						
 						plus.nativeUI.showWaiting("请稍后...");
-						mui.ajax(app.serverUrl + "/u/search?myUserId=" + user.id +
-										"&friendUsername=" + friendUsername, {
+						mui.ajax(app.serverUrl + "/u/search?myUserId="+user.id+"&friendUsername="+friendUsername, {
 							data:{},
-							dataType:'json',//服务器返回json格式数据
-							type:'post',//HTTP请求类型
-							timeout:10000,//超时时间设置为10秒；
+							dataType:'json',
+							type:'post',
+							timeout:10000,
 							headers:{'Content-Type':'application/json'},	              
-							success:function(data){
-								//服务器返回响应
+							success:function(result){
 								plus.nativeUI.closeWaiting();
 								
-								if (data.status == 200) {
-									
+								if (result.status == 200) {
 									mui.openWindow({
 										url: "searchFriendsResult.html",
 										id: "searchFriendsResult.html",
 										styles: {},
 										extras: {
-											willBeFriend: data.data
+											willBeFriend: result.data
 										}
 									});
 									
 								} else {
-									app.showToast(data.msg, "error");
+									app.showToast(result.msg, "error");
 								}
 							}
 						});
@@ -100,5 +92,4 @@
 			}
 		</script>
 	</body>
-
 </html>
