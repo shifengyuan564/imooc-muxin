@@ -186,7 +186,7 @@ window.app = {
 			for (var i = 0 ; i < chatSnapshotList.length ; i ++) {
 				if (chatSnapshotList[i].friendId == friendId) {
 					// 删除已经存在的friendId所对应的快照对象
-					chatSnapshotList.splice(i, 1);
+					chatSnapshotList.splice(i, 1);	// 从第i个元素往后删1个
 					break;
 				}
 			}
@@ -198,7 +198,7 @@ window.app = {
 		// 构建聊天快照对象
 		var singleMsg = new me.ChatSnapshot(myId, friendId, msg, isRead);
 		
-		// 向list中追加快照对象
+		// 向list中追加快照对象 
 		chatSnapshotList.unshift(singleMsg);
 		
 		plus.storage.setItem(chatKey, JSON.stringify(chatSnapshotList));
@@ -256,7 +256,7 @@ window.app = {
 	},
 	
 	/**
-	 * 标记未读消息为已读状态
+	 * 标记快照中未读消息为已读状态
 	 * @param {Object} myId
 	 * @param {Object} friendId
 	 */
@@ -270,7 +270,7 @@ window.app = {
 			// 如果不为空
 			chatSnapshotList = JSON.parse(chatSnapshotListStr);
 			// 循环这个list，判断是否存在好友，比对friendId，
-			// 如果有，在list中的原有位置删除该 快照 对象，然后重新放入一个标记已读的快照对象
+			// 如果有，在list中的原有位置删除该 friend快照 对象，然后重新放入一个标记已读的快照对象
 			for (var i = 0 ; i < chatSnapshotList.length ; i ++) {
 				var item = chatSnapshotList[i];
 				if (item.friendId == friendId) {
@@ -294,7 +294,7 @@ window.app = {
 	CHAT: 2, 		// 聊天消息
 	SIGNED: 3, 		// 消息签收
 	KEEPALIVE: 4, 	// 客户端保持心跳
-	PULL_FRIEND:5,	// 重新拉取好友
+	PULL_FRIEND: 5,	// 重新拉取好友
 	
 	/**
 	 * 和后端的 ChatMsg 聊天模型对象保持一致
