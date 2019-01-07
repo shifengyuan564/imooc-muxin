@@ -3,7 +3,7 @@ window.app = {
 	/**
 	 * netty服务后端发布的url地址
 	 */
-	nettyServerUrl: 'ws://localhost:8088/ws',
+	nettyServerUrl: 'ws://172.20.10.9:8088/ws',
 	
 	/**
 	 * 后端服务发布的url地址
@@ -349,5 +349,4 @@ window.app = {
 		this.msg = msg;
 		this.isRead = isRead;
 	}
-	
 }

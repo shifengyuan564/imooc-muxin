@@ -155,7 +155,7 @@
 					// 每次连接之后，获取用户的未读未签收消息列表
 					fetchUnReadMsg();
 					
-					// 定时发送心跳
+					// 定时发送心跳 (10s)
 					setInterval("CHAT.keepalive()", 10000);
 				},
 				wsmessage: function(e) {
@@ -218,7 +218,7 @@
 					// 发送心跳
 					CHAT.chat(JSON.stringify(dataContent));
 					
-					// 定时执行函数
+					// 定时执行函数 （刷新）
 					fetchUnReadMsg();
 					fetchContactList();
 				}
